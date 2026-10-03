@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dear Stranger — Mystery Letters</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=DM+Sans:wght@400;500;700&display=swap');
+:root{--ink:#2f2925;--paper:#fffaf0;--cream:#f4ead8;--rose:#c97872;--darkrose:#a95752;--line:#dfd2bd}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--ink);background:#efe5d4;font-family:"DM Sans",sans-serif}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.2;background-image:radial-gradient(#8d765b 0.7px,transparent .7px);background-size:7px 7px}
+nav{position:sticky;top:0;z-index:10;background:rgba(255,250,240,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:14px 5%;display:flex;justify-content:space-between;align-items:center}
+.logo{font:700 29px Caveat;color:var(--darkrose)}nav a{color:var(--ink);text-decoration:none;margin-left:22px;font-size:14px}.cart{border:1px solid var(--ink);padding:8px 13px;border-radius:30px;cursor:pointer}
+.hero{min-height:650px;padding:80px 7%;display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:50px;background:var(--paper)}
+h1{font:700 clamp(58px,8vw,105px)/.8 Caveat;margin:0 0 25px;max-width:650px}h2{font:700 45px Caveat;margin:0 0 12px}.hero p{font-size:18px;line-height:1.7;max-width:570px}.btn{display:inline-block;border:0;background:var(--ink);color:#fff;padding:14px 22px;border-radius:5px;text-decoration:none;font-weight:700;cursor:pointer;margin-top:10px}.btn:hover{background:var(--darkrose)}
+.envelope-wrap{display:flex;justify-content:center}.envelope{width:min(390px,90vw);height:260px;background:#ead4b4;position:relative;box-shadow:0 22px 40px #8d765b44;transform:rotate(2deg)}.envelope:before{content:"";position:absolute;inset:0;background:#f3dfc2;clip-path:polygon(0 0,50% 53%,100% 0);z-index:2}.letter{position:absolute;background:#fffaf0;width:76%;height:185px;left:12%;top:-45px;box-shadow:0 5px 20px #0002;padding:25px;font:600 27px Caveat;transform:rotate(-5deg);z-index:1}.seal{position:absolute;z-index:4;left:calc(50% - 25px);top:105px;width:50px;height:50px;border-radius:50%;background:var(--rose);color:white;display:grid;place-items:center;font:28px Caveat}
+section{padding:75px 7%;position:relative}.section-head{text-align:center;max-width:700px;margin:0 auto 35px}.section-head p{line-height:1.6}.products{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;max-width:1200px;margin:auto}.card{background:var(--paper);border:1px solid var(--line);padding:25px;box-shadow:4px 7px 0 #d9c9b0}.card:nth-child(even){transform:rotate(1deg)}.card:nth-child(odd){transform:rotate(-1deg)}.card h3{font:700 31px Caveat;margin:5px 0}.price{font-weight:700;font-size:20px}.card p{font-size:14px;line-height:1.6;min-height:65px}.card button{width:100%;padding:12px;background:transparent;border:1px solid var(--ink);cursor:pointer;font-weight:700}.card button:hover{background:var(--ink);color:#fff}
+.how{background:#e7d7bd}.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:25px;max-width:1000px;margin:auto}.step{text-align:center}.number{font:700 50px Caveat;color:var(--darkrose)}
+footer{padding:40px 7%;text-align:center;background:var(--ink);color:#fff}.small{font-size:13px;opacity:.7}
+.modal{display:none;position:fixed;inset:0;background:#20191499;z-index:30;padding:20px;overflow:auto}.modal.show{display:grid;place-items:center}.box{background:var(--paper);width:min(620px,100%);padding:30px;position:relative;box-shadow:0 20px 60px #0005}.close{position:absolute;right:18px;top:12px;border:0;background:none;font-size:28px;cursor:pointer}.box h2{margin-right:35px}.cart-row{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding:12px 0}.qty button{width:28px;height:28px}.total{font-weight:700;font-size:20px;text-align:right;margin:18px 0}label{display:block;font-size:13px;font-weight:700;margin:12px 0 5px}input,textarea{width:100%;padding:12px;border:1px solid var(--line);background:#fffdf8;font:inherit}textarea{min-height:80px}.checkout{margin-top:8px;width:100%}.notice{background:#f4e4ca;padding:12px;font-size:13px;line-height:1.5;margin-top:15px}
+@media(max-width:850px){.hero{grid-template-columns:1fr;text-align:center;padding-top:55px}.hero p{margin-left:auto;margin-right:auto}.products{grid-template-columns:repeat(2,1fr)}.steps{grid-template-columns:1fr}.envelope{margin:25px 0}.hero h1{margin-left:auto;margin-right:auto}}
+@media(max-width:520px){nav a{display:none}.products{grid-template-columns:1fr}.card{transform:none!important}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="logo">Dear Stranger 💌</div>
+  <div><a href="#letters">Letters</a><a href="#how">How it works</a><span class="cart" onclick="openCart()">Cart (<span id="cartCount">0</span>)</span></div>
+</nav>
+
+<header class="hero">
+  <div>
+    <h1>A little mystery in your mailbox.</h1>
+    <p>Receive a real handwritten letter from a stranger. You won't know exactly what it says until you open the envelope. It might make you smile, think, laugh — or simply brighten an ordinary day.</p>
+    <a class="btn" href="#letters">Choose your mystery →</a>
+  </div>
+  <div class="envelope-wrap"><div class="envelope"><div class="letter">“Somewhere, someone thought you might need to hear this…”</div><div class="seal">♥</div></div></div>
+</header>
+
+<section id="letters">
+  <div class="section-head"><h2>Pick your mystery</h2><p>Every letter is selected at random from our collection and handwritten before being sealed and posted.</p></div>
+  <div class="products">
+    <div class="card"><h3>Little Note</h3><div class="price">£3.50</div><p>A short, uplifting mystery message. Small envelope, big possibility.</p><button onclick="add('Little Note',3.5)">Add to cart</button></div>
+    <div class="card"><h3>Dear Stranger</h3><div class="price">£5.50</div><p>A full handwritten letter designed to give you something to keep.</p><button onclick="add('Dear Stranger',5.5)">Add to cart</button></div>
+    <div class="card"><h3>Lucky Letter</h3><div class="price">£8.50</div><p>A longer surprise letter with an extra mystery tucked inside.</p><button onclick="add('Lucky Letter',8.5)">Add to cart</button></div>
+    <div class="card"><h3>Three Mysteries</h3><div class="price">£14.00</div><p>Three completely different handwritten letters. No spoilers.</p><button onclick="add('Three Mysteries',14)">Add to cart</button></div>
+  </div>
+</section>
+
+<section class="how" id="how">
+  <div class="section-head"><h2>How does it work?</h2><p>No subscriptions. No complicated choices. Just a little mystery.</p></div>
+  <div class="steps">
+    <div class="step"><div class="number">01</div><h3>Choose</h3><p>Pick the mystery letter that sounds right for you.</p></div>
+    <div class="step"><div class="number">02</div><h3>We write</h3><p>A random message is handwritten and carefully placed in an envelope.</p></div>
+    <div class="step"><div class="number">03</div><h3>You open</h3><p>Your letter arrives through the post. The mystery ends when you open it.</p></div>
+  </div>
+</section>
+
+<footer><div class="logo" style="color:#fff">Dear Stranger 💌</div><p>One envelope. One mystery. One little moment.</p><p class="small">Demo shop — checkout is not connected to payments yet.</p></footer>
+
+<div class="modal" id="cartModal">
+ <div class="box">
+  <button class="close" onclick="closeCart()">×</button>
+  <h2>Your mystery cart</h2>
+  <div id="cartItems"></div><div class="total">Total: £<span id="total">0.00</span></div>
+  <div id="details">
+   <h2 style="font-size:32px">Where should we send it?</h2>
+   <label>Name</label><input id="name" placeholder="Your name">
+   <label>Email</label><input id="email" type="email" placeholder="you@example.com">
+   <label>Delivery address</label><textarea id="address" placeholder="Your full postal address"></textarea>
+   <label>Optional note</label><textarea id="note" placeholder="Anything you'd like us to know?"></textarea>
+   <div class="notice">This first version uses a checkout placeholder. To take real payments, connect Stripe/PayPal or Shopify before launching.</div>
+   <button class="btn checkout" onclick="checkout()">Continue to checkout</button>
+  </div>
+ </div>
+</div>
+
+<script>
+let cart=[];
+function add(name,price){cart.push({name,price});render();openCart()}
+function removeItem(i){cart.splice(i,1);render()}
+function render(){
+ document.getElementById('cartCount').textContent=cart.length;
+ let html=cart.length?cart.map((x,i)=>`<div class="cart-row"><span>${x.name} — £${x.price.toFixed(2)}</span><button onclick="removeItem(${i})">Remove</button></div>`).join(''):'<p>Your cart is empty. Choose a mystery above.</p>';
+ document.getElementById('cartItems').innerHTML=html;
+ document.getElementById('total').textContent=cart.reduce((a,b)=>a+b.price,0).toFixed(2);
+}
+function openCart(){document.getElementById('cartModal').classList.add('show');render()}
+function closeCart(){document.getElementById('cartModal').classList.remove('show')}
+function checkout(){
+ if(!cart.length)return alert('Please choose a mystery letter first.');
+ if(!document.getElementById('name').value||!document.getElementById('email').value||!document.getElementById('address').value)return alert('Please fill in your name, email and delivery address.');
+ alert('Demo checkout reached! Your next step is connecting a real payment provider.');
+}
+render();
+</script>
+</body>
+</html>
